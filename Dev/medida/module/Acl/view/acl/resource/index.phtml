@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+                        <span class="panel-title pull-left">
+            <h4 class="">
+
+                <?php echo $this->translate('ACL') ?>
+                >
+                <?php echo $this->translate('Resources') ?>
+            </h4>
+                    </span>
+
+            <div class="row">
+                <div class="col-xs-7 col-md-4 col-lg-4 pull-right" style="padding-left:0;">
+
+                    <form class="no-padding" role="form">
+                        <div class="input-group">
+                            <input type="text" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info form-control" type="submit"><i
+                                        class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <!--                data-toggle="modal" href="#myModal" class="btn btn-primary"-->
+                <a data-toggle="modal"
+                   href="<?php echo $this->url('acl/default', array('controller' => 'resource', 'action' => 'inserir')); ?>"
+                   class="btn btn-primary pull-right"
+                   title="<?php echo $this->translate('Novo') ?>"
+                   style="margin-right: 5px;">
+                    <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo') ?>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="panel-body" style="padding-top: 0;">
+
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ação</th>
+                </tr>
+
+                <?php foreach ($this->data as $entity): ?>
+                    <tr>
+                        <td><?php echo $entity->getId(); ?></td>
+                        <td><?php echo $entity->getNome(); ?></td>
+                        <td>
+                            <a href="<?php echo $this->url('acl/default',
+                                array('controller' => 'resource', 'action' => 'editar', 'id' => $entity->getId())); ?>"><i class="glyphicon glyphicon-edit text-success"></i></a>
+                            <a href="<?php echo $this->url('acl/default',
+                                array('controller' => 'resource', 'action' => 'remover', 'id' => $entity->getId())); ?>"><i class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+
+            </table>
+        </div>
+        <div class="panel-footer">
+            <?php echo $this->paginationControl($this->data, 'Sliding', 'partials/paginator'); ?>
+        </div>
+
+    </div>
+</div>

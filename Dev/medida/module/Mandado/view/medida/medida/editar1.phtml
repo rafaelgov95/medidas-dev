@@ -1,0 +1,240 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: walmirlsj
+ * Date: 02/05/14
+ * Time: 22:37
+ */
+
+if (count($this->messages["Danger"]) or count($this->messages["Warning"]) or count($this->messages["Success"]) or count($this->messages["Info"]) or count($this->messages["Messages"])) {
+    ?>
+    <?php foreach ($this->messages as $alert => $type) { ?>
+        <?php foreach ($type as $pox => $msg) { ?>
+            <div class="alert alert-block <?php echo strtolower('alert-' . $alert) ?>">
+                <a class="close" data-dismiss="alert" href="#">x</a>
+
+                <p><?php echo $this->translate($msg) ?></p>
+            </div>
+        <?php } ?>
+    <?php } ?>
+
+<?php }//else: ?>
+
+
+    <!--<form method="post" name="teste" class="form-horizontal" action="/catalogo/veiculo/inserir"-->
+    <!--      enctype="multipart/form-data" id="teste">-->
+    <!--    <div class="col-lg-6 col-sm-6 col-12">-->
+    <!--        <h4>Input Groups</h4>-->
+    <!---->
+    <!--        <div class="input-group">-->
+    <!--                <span class="input-group-btn">-->
+    <!--                    <span class="btn btn-primary btn-file">-->
+    <!--                        Browse… <input type="file" multiple="">-->
+    <!--                    </span>-->
+    <!--                </span>-->
+    <!--            <input type="text" class="form-control" readonly="">-->
+    <!--        </div>-->
+    <!--            <span class="help-block">-->
+    <!--                Try selecting one or more files and watch the feedback-->
+    <!--            </span>-->
+    <!--    </div><br>-->
+    <!--    <input type="file" class="filestyle" data-icon="false" multiple="multiple">-->
+    <!--    <br>-->
+    <!--    <input type="file" class="filestyle" data-buttonText="Procurar Arquivo" multiple="multiple">-->
+    <!--</form>-->
+    <script>
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+        $(document).ready(function () {
+            $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+                console.log(numFiles);
+                console.log(label);
+            });
+        });
+    </script>
+    <script type="text/javascript" src="/js/bootstrap-filestyle.min.js"></script>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('medida/default', array('controller' => 'medida', 'action' => 'editar')));
+$form->setAttribute('class', 'form-inline');
+$form->prepare();
+?>
+    <div class="col-lg-12 row clearfix">
+        <?php echo $this->form()->openTag($form); //    echo $this->formCollection($form);?>
+        <div class="panel panel-primary panel-crud-editar">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <span class="panel-title"> <?php echo $this->translate('Editar Medida Protetiva') ?></span>
+            </div>
+
+            <div class="panel-body clearfix">
+
+                <?php foreach ($form as $element) { ?>
+                    <?php
+                    if ($element->getAttribute('type') == "submit" || $element->getAttribute('type') == "button" || $element->getAttribute('type') == "hidden")
+                        continue;
+                    ?>
+                    <?php if ($element->getAttribute('type') !== "file") { ?>
+                        <div class="col-lg-4 form-control-static clearfix" style="margin-bottom: 0;padding: 10px;">
+                            <?php if (null != $element->getLabel()) ?>
+                            <label for="<?php echo $element->getName() ?>"
+                                   style="margin-bottom: 0;font-size: medium;"
+                                   class="label col-lg-12">
+                                <?php echo $element->getLabel() ?>
+                            </label>
+
+                            <div class="col-lg-12 input-group">
+                                <?php
+                                echo $this->formElement($element);
+                                echo $this->formElementErrors()
+                                    ->setMessageOpenFormat('<div class="text-danger">')
+                                    ->setMessageSeparatorString('</div><div class="help-inline">')
+                                    ->setMessageCloseString('</div>')
+                                    ->render($element);
+                                ?>
+                                <!--                                </div>-->
+                            </div>
+                        </div>
+                        <!--                --><?php //echo $element->getAttribute('type'); ?>
+
+                    <?php } else { ?>
+
+                    <?php } ?>
+
+                <?php } ?>
+                <div id="" class="col-lg-5 row">
+                    <div class="panel panel-crud-editar" style="margin-top:10px;">
+
+                        <div class="col-lg-12 clearfix panel-heading"
+                             style="margin-bottom: 10px;padding: 0;">
+
+                            <div class="label col-lg-12"
+                                 style="margin: 0;padding: 0; ">
+
+                                <label class="col-lg-12 text-center form-control-static" for="accept"
+                                       style="font-weight: normal;font-size: 14px;">
+                                    <span class="h4">Editar Documento PDF  </span>
+
+
+                                </label>
+                            </div>
+                        </div>
+                        <div class="panel-body form-horizontal clearfix">
+                            <div class="form-group">
+
+
+                                <div class="form-inline">
+
+                                    <!--                        <form name="uploadFiles" id="uploadFiles" style='' method="post"-->
+                                    <!--                              action="/catalogo/teste/upload" enctype="multipart/form-data">-->
+                                    <div class="col-lg-4 pull-right">
+                                        <button type="submit" class="btn btn-primary ">Upload files</button>
+                                    </div>
+                                    <div class="col-lg-8" style="">
+                                        <input type="file" name="files[]" class="filestyle col-lg-8"
+                                               data-buttonBefore="true"
+                                               data-buttonText="Procurar Arquivo"
+                                               multiple="multiple">
+                                    </div>
+                                    <!--                        </form>-->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                </div>-->
+                <!--            </div>-->
+
+            </div>
+            <div class="panel-footer clearfix">
+
+                <?php foreach ($form as $element) {
+
+                    if ($element->getAttribute('type') == "hidden") {
+                        echo $this->formHidden($element);
+                        continue;
+                    } else if ($element->getAttribute('type') != "submit" && $element->getAttribute('type') != "button") {
+                        continue;
+                    } else {
+                        echo $this->formElement($element);
+                    }
+                } ?>
+            </div>
+        </div>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+<?php //endif; ?>
+    <div class="clearfix"></div>
+
+
+    <!--<script type="text/javascript" src="/js/bootstrap-filestyle.min.js"></script>-->
+<?php
+/*
+/*
+ * 03:16 - 08-07-15
+ * Pra salva as imagens criar uma pasta temporaria do user, e com nome e data,
+ * salva o diretorio recebido por ajax, no formulario que está sendo criado,
+ * assim ao dar submit no formulario de cadastro envia o link, da pasta temporaria
+ * para o controller poder mudar os arquivos de pasta. para pasta nova*
+ *
+/
+<div class="span6">
+    <div class="clearfix">
+        <div id="" class="panel panel-default">
+
+            <form id="panel-body" class="panel-body form-horizontal">
+                <div class="form-group col-md-12">
+                    <!--                    <label for="file" class="control-label">-->
+                    <!--                        Enviar foto-->
+                    <!--                    </label>-->
+
+                    <fieldset>
+                        <legend>Upload new files</legend>
+                    </fieldset>
+                    <div class="">
+
+                        <!--                        <form name="uploadFiles" id="uploadFiles" style='' method="post"-->
+                        <!--                              action="/catalogo/teste/upload" enctype="multipart/form-data">-->
+                        <button type="submit" class="btn btn-primary pull-right">Upload files</button>
+                        <input type="file" name="files[]" class="filestyle" data-buttonBefore="true"
+                               data-buttonText="Procurar Arquivo"
+                               multiple="multiple">
+
+                        <!--                        </form>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-group col-md-12">
+        <label for="file" class="control-label">
+            Enviar fotos
+        </label>
+
+        <div class="">
+            <fieldset>
+                <!--                        <legend>Upload new files</legend>-->
+                Upload files
+            </fieldset>
+            <form name="uploadFiles" id="uploadFiles" style='' method="post"
+                  action="/catalogo/teste/upload" enctype="multipart/form-data">
+                <button type="submit" class="btn btn-primary pull-right">Upload files</button>
+                <input type="file" name="files[]" class="filestyle" data-buttonBefore="true"
+                       data-buttonText="Procurar Arquivo"
+                       multiple="multiple">
+
+            </form>
+        </div>
+    </div>
+*/

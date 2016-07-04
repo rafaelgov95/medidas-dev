@@ -1,0 +1,78 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('M ' . $this->translate('Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/build.css'))
+//        ->prependStylesheet($this->basePath('css/awesome-bootstrap-checkbox.css'))
+        ->prependStylesheet($this->basePath('css/style.css'))
+        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+//        ->prependStylesheet($this->basePath('css/glyphicons/glyphicons.css'))//        ->prependStylesheet($this->basePath("css/uploads/jquery.fileupload.css"))
+    ;
+
+    //        ->prependStylesheet($this->basePath("css/uploads/style.css"));
+    //        );
+    ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+//        ->prependFile($this->basePath('js/main.js'))
+//        ->prependFile($this->basePath('js/modal.js'))
+        ->prependFile($this->basePath('js/bootstrap.min.js'))
+        ->prependFile($this->basePath('js/jquery-2.1.4.min.js'))
+//        ->prependFile($this->basePath('js/bootstrap-filestyle.min.js'))
+        ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+        ->prependFile($this->basePath('js/html5shiv.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',)); ?>
+
+</head>
+<body style="background-color: #DFDFDF;/*#00ACCA#E7E7E7#262626*/">
+
+<?php echo $this->partial('partials/header-admin'); ?>
+
+<div class="row-fluid">
+    <div class="container-fluid">
+        <?php echo $this->content; ?>
+    </div>
+</div>
+<!-- /container -->
+
+<hr>
+<footer>
+    <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies
+        Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+</footer>
+
+<?php echo $this->inlineScript() ?>
+</body>
+</html>
+
+<div class="panel">
+    <div id="content_modal" class="modal fade" tabindex="-1" style="text-align:center !important;"
+         aria-labelledby="box-actionsLabel">
+        <div class="modal-dialog modal-lg" style="text-align: center !important;">
+            <div id="content_temp" style="text-align: center !important;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.action').click(function (e) {
+        $var = $(this).attr('href');
+        e.preventDefault();
+        e.stopPropagation();
+
+        $("#content_temp").load($var);
+        $("#content_temp").html('<center><img src="/img/loaders/gears.svg" width="100px" height="100px"></center>');
+        $('#content_modal').modal('show');
+    });
+</script>

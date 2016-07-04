@@ -1,0 +1,70 @@
+<?php
+/*
+    Começa Catalogo
+*/
+?>
+<?php
+// Store the container in the proxy helper:
+//$this->plugin('navigation')->setContainer($container);
+$acl = $this->get("Acl\Permissions\Acl");
+$partial = array('partials/navigation', 'menu');
+//->setPartial($partial)
+echo $this->navigation('Navigation')->setAcl($acl)->setRole('Admin')->menu();
+
+
+?>
+
+<!--<div class="well">-->
+<div class="row">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading clearfix">
+            <div class="pull-left text-center">
+                <p><b>Catalogo</b>
+
+                <p>
+            </div>
+
+            <div class="pull-right">
+                <form>
+                    <input type="search" placeholder="Pesquisar?">
+                    <i class="glyphicon glyphicon-search"></i>
+                </form>
+            </div>
+        </div>
+        <div class="panel-body" style="background-color: #8f8b82;">
+            <div class="row">
+                <?php
+                for ($j = 0;
+                     $j < 100;
+                     $j++) {
+                    ?>
+                    <a href="/carro<?php echo $j + 1; ?>">
+                        <div class="col-md-2" style="padding: 5px !important; display: block;">
+                            <div class="panel panel-default"
+                                 style="padding: 0 !important; display: block; margin-bottom: 0 !important;">
+
+                                <div class="panel-body" style="padding: 5px !important; display: block;">
+
+                                    <p><img src="/img/cars/c<?php echo ($j % 8) + 1; ?>.jpg"
+                                            style="width: 100%;height: 100px;"></p>
+
+                                    <div class="center-block" style="display:block;text-align: center;">
+                                            <span
+                                                class="clearfix"><b><?php echo 'Peugeot ' . rand(100, 999); ?></b></span>
+                                        <span class="clearfix"><b><?php echo '2014' . '/' . '2015'; ?></b></span>
+                                        <span class="clearfix"><b>R$ <?php echo $j * $j + 1; ?></b></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                <?php
+                }
+                ?>
+
+            </div>
+        </div>
+    </div>
+</div>

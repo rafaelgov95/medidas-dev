@@ -1,0 +1,80 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: walmirlsj
+ * Date: 05/07/15
+ * Time: 22:47
+ */
+
+if (count($this->messages["Danger"]) or count($this->messages["Warning"]) or count($this->messages["Success"]) or count($this->messages["Messages"])) {
+    ?>
+    <?php foreach ($this->messages as $alert => $type) { ?>
+        <?php foreach ($type as $pox => $msg) { ?>
+            <div class="alert alert-block <?php echo strtolower('alert-' . $alert) ?>">
+                <a class="close" data-dismiss="alert" href="#">x</a>
+
+                <p><?php echo $this->translate($msg) ?></p>
+            </div>
+        <?php } ?>
+    <?php } ?>
+
+<?php }//else: ?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('catalogo/default', array('controller' => 'veiculo', 'action' => 'editar', 'refid' => $this->refid)));
+//    $form->setAttribute('class','form-horizontal');
+$form->prepare();
+?>
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-title"> <?php echo $this->translate('Alterar informações da veiculo') ?></span>
+        </div>
+
+        <?php echo $this->form()->openTag($form); //    echo $this->formCollection($form);?>
+        <div class="panel-body">
+            <?php foreach ($form as $element) { ?>
+                <?php
+                if ($element->getAttribute('type') == "submit" || $element->getAttribute('type') == "button" || $element->getAttribute('type') == "hidden")
+                    continue;
+                ?>
+                <div class="form-group">
+                    <?php if (null != $element->getLabel()) ?>
+                    <label for="<?php echo $element->getName() ?>" class="col-lg-4 col-md-4 control-label">
+                        <?php echo $element->getLabel() ?>
+                    </label>
+
+                    <div class="col-lg-5 col-md-5">
+                        <?php
+                        echo $this->formElement($element);
+                        echo $this->formElementErrors()
+                            ->setMessageOpenFormat('<div class="text-danger">')
+                            ->setMessageSeparatorString('</div><div class="help-inline">')
+                            ->setMessageCloseString('</div>')
+                            ->render($element);
+                        ?>
+                    </div>
+                </div>
+
+            <?php } ?>
+        </div>
+
+        <div class="panel-footer clearfix">
+            <?php foreach ($form as $element) {
+
+                if ($element->getAttribute('type') == "hidden") {
+                    echo $this->formHidden($element);
+                    continue;
+                } else if ($element->getAttribute('type') != "submit" && $element->getAttribute('type') != "button") {
+                    continue;
+                } else {
+                    echo $this->formElement($element);
+                }
+            } ?>
+        </div>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+
+</div>
+<?php //endif; ?>
+<div class="clearfix"></div>

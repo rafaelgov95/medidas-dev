@@ -1,0 +1,122 @@
+<?php
+
+$entity = $this->entity;
+//
+//if($this->entity===null)
+//    echo 'null';
+//else
+//    echo 'ok';
+
+if (NULL !== $this->entity) {
+    ?>
+    <div class="col-lg-12">
+
+        <div class="panel panel-crud-dark">
+                        <div class="panel-heading">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                                <span class="h3">Informações Pessoais</span>
+                        </div>
+                        <div class="panel-body text-left">
+                            <dl>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Cliente: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getNome() . ' ' . $entity->getSobreNome(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Sexo: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getSexo() == 0 ? 'Masculino' : 'Feminino'; ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">CPF: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getCPF(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">RG: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getRG() ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Data de Nascimento: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getDataNasc()->format('d-m-Y h:i:s'); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Telefone: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getTelefone(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Celular: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getCelular(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Email: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getUser()->getEmail(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Estado: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getEstado(); ?></span>
+                                </dd>
+                                <hr>
+
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Cidade: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getCidade(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Endereço: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getEndereco(); ?>
+                                    </span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Bairro: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getBairro(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Cep: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getCep(); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Criado em: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getCreatedAt()->format('d-m-Y h:i:s'); ?></span>
+                                </dd>
+                                <hr>
+                                <dd class="clearfix">
+                                    <span class="legend col-lg-6">Ultima atualização: </span>
+                                    <span class="value col-lg-6"><?php echo $entity->getUpdatedAt()->format('d-m-Y h:i:s'); ?></span>
+                                </dd>
+                            </dl>
+
+                            <a class="btn btn-default pull-right"
+                            href="<?php echo $this->route; ?>">
+                                <i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+<?php } else { ?>
+
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <h1>Ops.!</h1>
+
+            <p>Perfil não encontrado.</p>
+            <!--        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>-->
+        </div>
+    </div>
+
+<?php } ?>

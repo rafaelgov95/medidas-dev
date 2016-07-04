@@ -1,0 +1,75 @@
+<?php
+/*
+    Começa Catalogo
+*/
+?>
+
+
+<!--<div class="well">-->
+<div class="row">
+    <div class="panel panel-default panel-crud-dark">
+
+        <div class="panel-heading clearfix">
+            <div class="pull-left text-center">
+<!--                <p><b>Catalogo</b>-->
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
+                    <!--            <span class="panel-title">-->
+                    <b><i class="glyphicon glyphicon-shopping-cart"></i> <?php echo $this->translate('Veiculos') ?></b>
+                    <!--                >-->
+                    <!--                --><?php //echo $this->translate('Resultados de Testes') ?>
+                    <!--        </span>-->
+                </h4>
+
+                <p>
+            </div>
+
+            <div class="pull-right col-md-3">
+                <form>
+<!--                    <input type="search" placeholder="Pesquisar?">-->
+<!--                    <i class="glyphicon glyphicon-search"></i>-->
+                    <div class="input-group">
+                        <input id="search" name="search" required="true" type="date"
+                               class="form-control" <?php //echo ($frm_search['search']!=null)?'value="'.$frm_search['search'].'"':'';?>>
+                                <span class="input-group-btn">
+                                    <button id="btnSearch" class="btn btn-default form-control" type="submit"><i
+                                            class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row-fluid">
+                <?php foreach ($this->data as $entity): ?>
+                    <?php //echo $entity->getData()->format('d/m/Y'); ?>
+                    <?php //echo ($entity->getProfissional()) ? $entity->getProfissional()->getNome() : "Não a vinculo"; ?>
+                    <?php //echo $entity->getTeste()->getDescricao(); ?>
+                    <?php //echo $entity->getDuracao(); ?>
+                    <?php //echo $entity->getValidadoAtleta()->format('d/m/Y'); ?>
+                    <?php //echo $entity->getValor(); ?>
+
+
+                    <a class="action" href="<?php
+                    echo $this->url('catalogo/default1',
+                        array(
+                            'controller' => 'index',
+                            'action' => 'detalhe',
+                            'categoria' => $entity->getCategoria()->getDescricao(),
+                            'refid' => $entity->getId(),
+                        ));
+                    ?>">
+
+                    </a>
+                <?php endforeach; ?>
+
+            </div>
+        </div>
+        <div class="panel-footer">
+            <?php echo $this->paginationControl($this->data, 'Sliding', 'partials/paginator'); ?>
+        </div>
+    </div>
+</div>
+
+
+

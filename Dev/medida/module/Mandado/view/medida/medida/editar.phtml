@@ -1,0 +1,138 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: walmirlsj
+ * Date: 05/07/15
+ * Time: 22:47
+ */
+
+$form = $this->form;
+$form->setAttribute('action', $this->route);
+//$this->url('catalogo/default', array('controller' => 'categoria', 'action' => 'editar', 'refid' => $this->refid))
+$form->setAttribute('class', $this->class_style);
+$form->prepare();
+?>
+<div class="col-lg-12 row clearfix panel-action">
+    <?php
+    echo $this->form()->openTag($form); //    echo $this->formCollection($form);
+
+    ?>
+    <div class="panel panel-primary <?php echo $this->style_panel; ?>">
+        <div class="panel-heading clearfix">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <span class="panel-title pull-left"><i class="glyphicon <?php echo $this->actionIcon != null? $this->actionIcon: 'glyphicon-book'; ?>"></i> <?php echo $this->translate($this->action) ?></span>
+        </div>
+
+        <div class="panel-body clearfix">
+
+            <?php foreach ($form as $element) { ?>
+                <?php
+                if ($element->getAttribute('type') == "submit" || $element->getAttribute('type') == "button" || $element->getAttribute('type') == "hidden")
+                    continue;
+                ?>
+                <div class="col-lg-6 form-control-static clearfix" style="text-align: left;">
+                    <?php if (null != $element->getLabel()) { ?>
+                        <div class="col-lg-12">
+                            <span for="<?php echo $element->getName() ?>"
+                                  class="label">
+                                <?php echo $element->getLabel() ?>
+                            </span>
+                        </div>
+                    <?php } ?>
+
+                    <div class="col-lg-12">
+                        <?php
+                        echo $this->formElement($element);
+                        echo $this->formElementErrors()
+                            ->setMessageOpenFormat('<div class="text-error">')
+                            ->setMessageSeparatorString('</div><div class="help-inline">')
+                            ->setMessageCloseString('</div>')
+                            ->render($element);
+                        ?>
+
+                    </div>
+                </div>
+            <?php } ?>
+
+        </div>
+
+        <div class="panel-footer clearfix">
+            <?php foreach ($form as $element) {
+
+                if ($element->getAttribute('type') == "hidden") {
+                    echo $this->formHidden($element);
+                    continue;
+                } else if ($element->getAttribute('type') != "submit" && $element->getAttribute('type') != "button") {
+                    continue;
+                } else {
+                    echo $this->formElement($element);
+                }
+            } ?>
+        </div>
+
+    </div>
+
+</div>
+<?php echo $this->form()->closeTag(); ?>
+<?php //endif; ?>
+<div class="clearfix"></div>
+
+<script>
+    $("document").ready(function () {
+        $(function () {
+            /* attach a submit handler to the form */
+            $(".panel-action-form").submit(function (event) {
+
+                /* stop form from submitting normally */
+                event.preventDefault();
+                event.stopPropagation();
+                /*clear result div*/
+                $("#result").html('');
+
+                /* Send the data using post and put the results in a div */
+                $.ajax({
+                    url: $(this).attr("action"),// or the url of your action
+                    type: $(this).attr("method"),// POST, GET
+                    async: true,
+                    cache: false,
+                    data: $(this).serialize(),
+                    success: function (data, status) {
+                        try {
+                            if (data['error']) {
+                                $(location).attr('href', data['error']);
+                            } else {
+                                $('#content_temp').html(
+                                    data
+                                );
+                            }
+                        } catch (e) {
+                            $("#content_temp").html('<div class="panel panel-info"><div class="panel-body">There was some error. Try again.</div></div>');
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        if (xhr.status === 0) {
+                            alert('Not connect.\n Verify Network.');
+                        } else if (xhr.status == 404) {
+                            alert('Requested page not found. [404]');
+                        } else if (xhr.status == 500) {
+                            alert('Server Error [500].');
+                        } else if (errorThrown === 'parsererror') {
+                            alert('Requested JSON parse failed.');
+                        } else if (errorThrown === 'timeout') {
+                            alert('Time out error.');
+                        } else if (errorThrown === 'abort') {
+                            alert('Ajax request aborted.');
+                        } else {
+                            alert('There was some error. Try again.');
+                        }
+                    },
+                    complete: function () {
+                        // Perform any operation need on success/error
+                    }
+                });
+            })
+        })
+    });
+
+</script>

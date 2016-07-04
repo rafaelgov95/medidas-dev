@@ -1,0 +1,239 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: walmirlsj
+ * Date: 11/07/15
+ * Time: 16:21
+ */
+?>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="
+    background: #555555 !important;margin-bottom: 0 !important;
+">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?php echo $this->url('home') ?>">
+                <img src="<?php echo $this->basePath('img/logo-tavel.png') ?>"
+                     alt="Zend Framework 2"/><?php echo $this->translate('') ?>
+            </a>
+
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-funcionario">
+                <li class=""><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Index') ?></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="true"><i
+                            class="glyphicon glyphicon-list-alt"></i> Medidas <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php
+                            echo $this->url('medida/default',
+                                array(
+                                    'controller' => 'medida',
+                                    'action' => 'index',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>"><i
+                                    class="glyphicon glyphicon glyphicon-edit"></i> Listar</a></li>
+                    </ul>
+
+                </li>
+                <!--                <li class="">-->
+                <!--                    <a href="--><?php //echo $this->url('catalogo') ?><!--">-->
+                <?php //echo $this->translate('catalogo') ?><!--</a>-->
+                <!--                </li>-->
+                <!--                <li class="">-->
+                <!--                    <a href="-->
+                <?php //echo $this->url('catalogo/list', array('controller' => 'listar', 'action' => 'listar', 'categoria' => 'veiculo', 'refid' => '1')) ?><!--">-->
+                <?php //echo $this->translate('catalogo 1') ?><!--</a>-->
+                <!--                </li>-->
+                <!--                <li class="">-->
+                <!--                    <a href="-->
+                <?php //echo $this->url('catalogo/list', array('controller' => 'listar', 'action' => 'detalhe', 'categoria' => 'veiculo', 'refid' => '1')) ?><!--">-->
+                <?php //echo $this->translate('catalogo 1') ?><!--</a>-->
+                <!--                </li>-->
+                <?php /**
+               <!--
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="true">Veículos <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'veiculo',
+                                    'action' => 'inserir',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>">Adicionar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'veiculo',
+                                    'action' => 'editar',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>">Editar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'veiculo',
+                                    'action' => 'index',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>">Listar</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Procurar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'index',
+                                    'action' => 'index',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>">Catalogo</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="true">Clientes <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php
+                            echo $this->url('cliente/default',
+                                array(
+                                    'controller' => 'index',
+                                    'action' => 'inserir',
+                                )
+                            ); ?>">Adicionar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('cliente/default',
+                                array(
+                                    'controller' => 'manager',
+                                    'action' => 'editar',
+                                    'refid' => '1'
+                                )
+                            ); ?>">Editar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('cliente/default',
+                                array(
+                                    'controller' => 'manager',
+                                    'action' => 'index',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>">Listar</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Procurar</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="true">Marcas <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'marca',
+                                    'action' => 'inserir',
+                                )
+                            ); ?>">Adicionar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'marca',
+                                    'action' => 'editar',
+                                    'refid' => '1'
+                                )
+                            ); ?>">Editar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'marca',
+                                    'action' => 'index',
+                                )
+                            ); ?>">Listar</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Procurar</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="true">Categorias <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'categoria',
+                                    'action' => 'inserir',
+                                )
+                            ); ?>">Adicionar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'categoria',
+                                    'action' => 'editar',
+                                    'refid' => '1'
+                                )
+                            ); ?>">Editar</a></li>
+                        <li><a href="<?php
+                            echo $this->url('catalogo/default',
+                                array(
+                                    'controller' => 'categoria',
+                                    'action' => 'index',
+//                                    'categoria' => 'veiculo',
+//                                    'refid' => '1'
+                                )
+                            ); ?>">Listar</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Procurar</a></li>
+          -->
+ */
+ ?>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right navbar-funcionario">
+
+
+                <?php if ($this->UserIdentity()) { ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                           data-toggle="dropdown" style="padding-top: 10px; padding-bottom: 10px;">
+                            <span class="glyphicon glyphicon-user   " aria-hidden="true"></span>
+
+                            <small><b><?php echo $this->UserIdentity()->getLogin(); ?></b></small>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('cliente/default', array('controller' => 'manager', 'action' => 'detalhe')) ?>"><i class="glyphicon glyphicon-book"></i> Meus Dados</a></li>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $this->url('user-logout') ?>"><i
+                                        class="glyphicon glyphicon-log-out"></i> Sair</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } else { ?>
+                    <li class="dropdown">
+                        <a href="<?php echo $this->url('user-auth') ?>"><i
+                                class="glyphicon glyphicon-log-in"></i> Login</a>
+                    </li>
+                <?php } ?>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>

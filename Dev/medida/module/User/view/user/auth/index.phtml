@@ -1,0 +1,167 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('user-auth'))
+    ->setAttribute("class", "form-login well col-lg-4")
+//     ->setAttribute("data-ajax", "1")
+    ->setAttribute('style', 'padding-bottom: 0; min-width:350px;');
+if ($this->isXmlHttpRequest == 0) {
+
+    $form->setAttribute('class', 'form-login well col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4');
+} else {
+    $form->setAttribute('class', 'form-login well col-lg-4');
+}
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+<fieldset class="clearfix text-center">
+    <legend>Login</legend>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <?php echo $this->formElement($form->get('login')) ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <?php echo $this->formElement($form->get('password')) ?>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="input-group checkbox-inline">
+            <input type="checkbox">Lembre-me
+        </label>
+    </div>
+
+    <div class="form-group clearfix">
+        <?php echo $this->formElement($form->get('submit')) ?>
+    </div>
+    <div class="form-group pagination-centered no-padding">
+        <span><a href="">Registrar me</a> / <a href="/recover">Esqueci a senha</a></span>
+    </div>
+    <div class="form-group">
+
+        <div class="alert alert-warning" id="div-Error"
+             style="margin-top:15px;margin-bottom: 0;<?php if (!$this->error) {
+                 echo 'display:none;';
+             } ?>">
+            <p>Usuário ou senha inválidos</p>
+        </div>
+        <?php if (count($form->getMessages())) { ?>
+            <div class="alert alert-info" id="div-Info" style="margin-top:15px;margin-bottom: 0;">
+                <?php echo $this->formElementErrors($form->get('login')) ?>
+                <?php echo $this->formElementErrors($form->get('password')) ?>
+            </div>
+        <?php } ?>
+    </div>
+</fieldset>
+
+<?php
+//echo $this->formCollection($form);
+echo $this->form()->closeTag();
+?>
+
+<!--    <div class="clearfix"></div>-->
+<!--    <button type="button" id="btn1">as</button>-->
+<!--    <script type="text/javascript">-->
+<!--        $(document).ready(function () {-->
+<!---->
+<!--            // Oculta o botão de navegação para a div 1.-->
+<!--//            $('#form_login').hide();-->
+<!---->
+<!--            // Aplica a transição quando houver click no link AVANÇAR.-->
+<!--            $("#btn1").click(function () {-->
+<!--                    $('#form_login').show();-->
+<!--                return false;-->
+<!--            })-->
+<!--        });-->
+<!--    </script>-->
+
+<script>
+
+    <?php
+    //if($this->isXmlHttpRequest != 0) {
+    /*
+    $(function () {
+        /**
+         *  @FIXME
+         *
+         * * /
+
+        $("#form_login").bind("submit", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log(
+                'url: ' + $(this).attr("action") +
+                'type: ' + $(this).attr("method") +
+                'dataType: ' + 'Json' +
+                'async: ' + true +
+                'cache: ' + false +
+                'data: ' + $(this).serialize()
+            );
+            $.ajax({
+                url: $(this).attr("action"),// or the url of your action
+                type: $(this).attr("method"),// POST, GET
+                dataType: 'Json',
+                async: true,
+                cache: false,
+                data: $(this).serialize(), // the data from your form , in your case the :selected
+                success: function (response, status, jQXHR) {
+                    var result = $.parseJSON(response);// this is needed to decode your JSON data the you get get back you action
+                    console.log('SUBMIT WORKS');
+
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('SUBMIT DON\'T WORKS');
+                    alert('Error: ' + errorThrown);
+                }
+            });
+
+            return false;
+        });
+    < ?php //} ? >*/
+    // Fill modal with content from link href
+    //    $("#myModal").on("show.bs.modal", function(e) {
+    //        var link = $(e.relatedTarget);
+    //        $(this).find(".modal-body").load(link.attr("href"));
+    //    });
+    /*jQuery(document).ready(function ($) {
+     function error() {
+     //            $("#div-Error").setAttribute('style', 'margin-top:15px;margin-bottom: 0;display:block;');
+     //            return true;
+     }
+     $("#form_login2").bind("submit", function (event) {
+     event.preventDefault();
+     event.stopPropagation();
+     $.ajax({
+     url: $(this).attr("action"),// or the url of your action
+     type: $(this).attr("method"),// POST, GET
+     dataType: 'json',
+     async: true,
+     cache: false,
+     data: $(this).serialize(), // the data from your form , in your case the :selected
+     success: function (response, status, jQXHR) {
+     //                    var result = $.parse(response);// this is needed to decode your JSON data the you get get back you action
+     //                    console.log(response);
+     //                    $("#div-Error").setAttribute('style', 'margin-top:15px;margin-bottom: 0;display:block;');
+     //                    if($("#div-Error").clearAttributes())
+     //                        console.log('ok');
+     //                    $('#div-Error').setAttribute('style', 'display: block;');
+     },
+
+     error: function (jqXHR, textStatus, errorThrown) {
+     console.log('SUBMIT DON\'T WORKS');
+     //                    alert('Error: ' + errorThrown);
+     }
+     });
+
+     //return false;
+     });
+     });
+
+//</script>
+        */
+        ?>

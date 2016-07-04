@@ -1,0 +1,537 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: walmirlsj
+ * Date: 05/07/15
+ * Time: 22:42
+ */
+
+if (count($this->messages["Danger"]) or count($this->messages["Warning"]) or count($this->messages["Success"]) or count($this->messages["Messages"])) {
+    ?>
+    <div class="col-lg-2" Style="position: fixed; top:50px; right: 0; z-index: 500;">
+        <?php $id = 0; ?>
+        <?php foreach ($this->messages as $alert => $type) { ?>
+            <?php foreach ($type as $pox => $msg) { ?>
+                <div id="<?php echo 'alert_id' . $id; ?>"
+                     class="alert alert-block <?php echo strtolower('alert-' . $alert) ?>">
+                    <a class="close" data-dismiss="alert" href="#">x</a>
+
+                    <p><?php echo $this->translate($msg) ?></p>
+                </div>
+
+                <script>
+                    setTimeout(function () {
+                        $('<?php echo "#alert_id".$id; ?>').fadeOut(1500);
+                    }, 3000);
+                </script>
+                <?php $id++; ?>
+            <?php } ?>
+        <?php } ?>
+    </div>
+
+
+<?php }//else: ?>
+
+<div class="row-fluid">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+            <span class="panel-title pull-left input-sm">
+                <b><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Medida') ?></b>
+            </span>
+
+            <div class="row-fluid">
+                <div class="col-lg-5 pull-right clearfix" style="padding-left:0;">
+                    <?php
+                    //                    var_dump($this->frm_search['limit']);
+                    $limit = $this->frm_search['limit'];
+                    //                    echo $limit;
+                    ?>
+                    <?php
+                    $user = $this->auth->getIdentity()['user'];
+
+                    //         var_dump($this->auth->getIdentity()['user'])->getRole()->getNome();
+
+                    $isInserir = $acl->isAllowed($user->getRole()->getNome(), 'Medida::Medida', "Inserir");
+                    $isEdit = $acl->isAllowed($user->getRole()->getNome(), 'Medida::Medida', "Editar");
+                    $isDownload = true;//$acl->isAllowed($user->getRole()->getNome(), 'Medida::Medida', "Baixar");
+                    $isRemove = $acl->isAllowed($user->getRole()->getNome(), 'Medida::Medida', "Remover");
+                    ?>
+                    <form id='frmSearch' class="form-query no-padding" role="form" method="get"
+                          action="<?php echo $_SERVER["REQUEST_URI"];
+                          ?>">
+                        <?php if ($isInserir) { ?>
+                            <a data-toggle="modal" href="<?php echo $this->url('medida/default',
+                                array('controller' => 'medida', 'action' => 'inserir')); //#ModalNew ?>"
+                               class="btn btn-primary pull-left action"
+                               title="<?php echo $this->translate('Novo') ?>"
+                               style="margin-right: 5px;">
+                                <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo') ?>
+                            </a>
+
+                        <?php } ?>
+
+                        <div style=""><a href="<?php echo $this->url('medida/default',
+                                array('controller' => 'medida', 'action' => 'index')); //#ModalNew ?>"
+                                         class="btn btn-primary pull-left "
+                                         title="<?php echo $this->translate('Inicio') ?>"
+                                         style="margin-right: 5px;">
+                                <i class="glyphicon glyphicon-screenshot"></i> <?php echo $this->translate('Inicio') ?>
+                            </a>
+                        </div>
+
+                        <div class="input-group">
+                            <?php
+                            $search = $this->frm_search['search'];
+                            $type = $this->frm_search['type'];
+                            $limit = $this->frm_search['limit'];
+                            ?>
+                            <input id="search" name="search"  data-type="text" no
+                                   class="form-control" <?php echo ($search = null) ? 'value="' . $search . '"' : ''; ?>>
+                            <span class="input-group-btn">
+                                <select id="type" name="type"  class='form-control'
+                                        style="width: 100px;">
+                                    <option value=""
+                                        <?php echo (null === $type) ? 'selected' : ''; ?>>--- Selecione ---
+                                    </option>
+                                    <option value="1"
+                                        <?php echo ($type === 1) ? 'selected' : ''; ?>>Oficio
+                                    </option>
+                                    <option value="2"
+                                        <?php echo ($type === 2) ? 'selected' : ''; ?>>Nome
+                                    </option>
+                                    <option value="3"
+                                        <?php echo ($type === 3) ? 'selected' : ''; ?>>Acusado
+                                    </option>
+                                    <option value="4"
+                                        <?php echo ($type === 4) ? 'selected' : ''; ?>>Data
+                                    </option>
+                                    <option value="5"
+                                        <?php echo ($type === 5) ? 'selected' : ''; ?>>Tel.Res
+                                    </option>
+                                    <option value="6"
+                                        <?php echo ($type === 6) ? 'selected' : ''; ?>>Tel.Cel
+                                    </option>
+                                    <option value="7"
+                                        <?php echo ($type === 7) ? 'selected' : ''; ?>>Cidade
+                                    </option>
+                                    <option value="8"
+                                        <?php echo ($type === 8) ? 'selected' : ''; ?>>Bairro
+                                    </option>
+                                    <option value="9"
+                                        <?php echo ($type === 9) ? 'selected' : ''; ?>>Endereço
+                                    </option>
+
+                                </select>
+                                <script>
+                                    $('#type').change(function (e) {
+//                            alert('executei');
+                                        var obj = $('#search');
+//                                        alert(eval(this.value));
+                                        switch (eval(this.value)) {
+                                            case 1://Data
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 2: //Profissional
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 3: //Profissional
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 4://Duracao
+                                                obj.attr('type', 'date');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 5://Data
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 6: //Profissional
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 7: //Profissional
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 8://Data
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            case 9: //Profissional
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', '');
+                                                break;
+                                            default:
+                                                obj.attr('type', 'text');
+                                                obj.attr('placeholder', 'Pesquise aqui');
+                                        }
+                                    }).change();
+                                </script>
+                            </span>
+                                <span class="input-group-btn">
+                                    <button id="btnSearch" class="btn btn-info form-control" type="submit"><i
+                                            class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body no-padding clearfix" style="margin: 0;padding: 0;">
+            <div class="table-responsive ">
+                <table class="table table-bordered" style="margin: 0;">
+                    <thead>
+                    <tr>
+                        <!--                        <th>ID</th>-->
+
+                        <th class="text-    center " style="padding: 5px !important;"><a href="<?php
+
+                            echo $this->url(
+                                'medida/search', array(
+                                    'controller' => 'medida',
+                                    'action' => 'index',
+                                    'order' => 'oficio',
+                                    'page' => $this->page,
+                                    'orderby' => (($this->order === 'oficio') ? (($this->orderby === 'asc') ? 'desc' : "asc") : 'asc')
+                                )
+                            );
+                            // (($this->order==='oficio')? $this->orderby: 'ASC')
+
+                            ?>">Oficio</a>
+                        </th>
+                        <th class="text-center " style="padding: 5px !important;"><a href="<?php
+
+                            echo $this->url(
+                                'medida/search', array(
+                                    'controller' => 'medida',
+                                    'action' => 'index',
+                                    'order' => 'nome',
+                                    'page' => $this->page,
+                                    'orderby' => (($this->order === 'nome') ? (($this->orderby === 'asc') ? 'desc' : "asc") : 'asc')
+                                )
+                            );
+                            // (($this->order==='oficio')? $this->orderby: 'ASC')
+
+                            ?>">Nome</th>
+                        <th class="text-center  " style="padding: 5px !important;"><a href="<?php
+
+                            echo $this->url(
+                                'medida/search', array(
+                                    'controller' => 'medida',
+                                    'action' => 'index',
+                                    'order' => 'acusado',
+                                    'page' => $this->page,
+                                    'orderby' => (($this->order === 'acusado    ') ? (($this->orderby === 'asc') ? 'desc' : "asc") : 'asc')
+                                )
+                            );
+                            // (($this->order==='oficio')? $this->orderby: 'ASC')
+
+                            ?>">Acusado</th>
+                        <th class="text-center " style="padding:5px; !important; white-space: nowrap !important;">Data
+                            Insc.
+                        </th>
+                        <th class="text-center" style="padding: 5px !important;">Tel.Res.</th>
+                        <th class="text-center " style="padding: 5px !important;">Tel.Cel.</th>
+                        <!--                        <th class="text-center " style="padding: 5px !important;">Estado</th>-->
+                        <th class="text-center  " style="padding: 5px !important; ">Cidade</th>
+                        <th class="text-center  " style="padding: 5px !important;">Bairro</th>
+                        <th class="text-center " style="padding: 5px !important;">Endereço</th>
+                        <?php
+                        // if ($isEdit) { ?>
+                        <th>Ação</th>
+                        <?php //} ?>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php $i = 0;
+
+                    if (count($this->data) === 0)
+                        echo "<tr><td><div style='font-size: medium; font-family: '>Obrigado Por Aguardar, Porém Não Encotramos Nada relacionado em Nosso Banco de Dados.....</div> </td></tr>";
+
+
+                    ?>
+
+
+
+
+
+
+
+          <?php
+ 
+
+          $cotadorSuspensas=$this->frm_legenda['total']-$this->frm_legenda['ativos'] ;
+          $cotadorAtivas=$this->frm_legenda['ativos'];
+          $contadorTotal= $cotadorAtivas + $cotadorSuspensas;
+          ?>
+
+                    <?php foreach ($this->data as $entity): ?>
+                        <?php $i++; ?>
+
+                        <tr style=" <?php
+
+                       $date = $entity->getData();
+                        //$date = new \DateTime();
+                       $hoje = new Datetime();
+                     $diff = $date->diff($hoje)->format('%M');// mostra diferença da data por dia, mes e ano.
+                      
+                        if ($diff >= 1) {
+                        
+                            echo 'background:#E4ADAF;color:black;     font-weight: bold; font-size: small;';
+  
+                        } elseif ($diff < 1) {
+
+                           //echo 'background:rgba(151, 249, 111, 0.74);;color:black;    font-weight: bold; font-size: small;';
+
+                        echo 'background:#E4ADAF;color:black;     font-weight: bold; font-size: small;';
+                        }
+
+
+                        ?>
+
+                            ">
+                            <!--                            <td>--><?php //echo $entity->getId(); ?><!--</td>-->
+
+                            <td style="padding:5px; !important; white-space: nowrap !important;"><?php echo $entity->getOficio();
+; ?></td>
+                            <td style="padding:5px; !important; white-space: nowrap !important;"><?php echo $entity->getNome(); ?></td>
+                            <td style="padding:5px; !important; white-space: nowrap !important;"><?php echo $entity->getAcusado(); ?></td>
+                            <td class="text-center"
+                                style="padding:5px; !important; white-space: nowrap !important;"> <?php echo $entity->getData()->format('d/m/Y'); ?></td>
+                            <td class="text-center"
+                                style="padding:5px; !important; white-space: nowrap !important;"><?php echo $entity->getTelr(); ?></td>
+                            <td class="text-center"
+                                style="padding:5px; !important; white-space: nowrap !important;"><?php echo $entity->getTelc(); ?></td>
+                            <td class="text-center"
+                                style="padding:3px; !important; white-space: nowrap !important;"><?php echo $entity->getCidade(); ?></td>
+                            <td class="text-center"
+                                style="padding:3px; !important; white-space: nowrap !important;"><?php echo $entity->getBairro(); ?></td>
+                            <td class="text-center"
+                                style="padding:5px; !important; white-space: nowrap !important;"><?php echo $entity->getRua(); ?></td>
+                            <td class="text-center" style="padding:5px; !important; white-space: nowrap !important;">
+                                <?php if ($this->auth->hasIdentity()) { ?>
+                                    <?php if ($isDownload) { ?>
+                                        <a href="<?php echo $entity->getFile(); ?>" target="_blank"><i
+                                                class=" glyphicon glyphicon-save text-warning"></i></a>
+
+                                    <?php } ?>
+                                    <?php if ($isEdit) { ?>
+                                        <a href="<?php echo $this->url('medida/default',
+                                            array('controller' => 'medida', 'action' => 'editar', 'refid' => $entity->getId())); ?>">
+                                            <i
+                                                class="glyphicon glyphicon-edit text-success"></i></a>
+                                    <?php } ?>
+                                    <?php if ($isRemove) { ?>
+                                        <a href="<?php echo $this->url('medida/default',
+                                            array('controller' => 'medida', 'action' => 'remover', 'refid' => $entity->getId())); ?>"
+                                           data-toggle="confirm">
+
+                                            <i class="glyphicon glyphicon-trash text-danger"></i></a>
+                                    <?php } ?>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                    <?php /* for (; $i < 10; $i++) { ? >
+                        <tr class="text-center">
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <td style="padding: 15px !important;"></td>
+                            <!--                            <td style="padding: 15px !important;"></td>-->
+                        </tr>
+                    < ?php }; */ ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <script>
+            $("[data-toggle=confirm]").click(function () {
+                $(this).click.url = $(this).attr('href');
+            }).confirm({
+                text: "Deseja realmente deletar?",
+                title: "Confirmar",
+                confirm: function (button) {
+                    $(location).attr('href', $(this).click.url);
+//                    $(this).trigger('click');
+                },
+                cancel: function (button) {
+                    e.preventDefault();
+                },
+                confirmButton: "Sim",
+                cancelButton: "Não"
+            });
+        </script>
+
+        <div class="panel-footer" >
+            <div class="row">
+                <div class="col-md-4" style="position:absolute;" >
+                    <?php echo $this->paginationControl($this->data, 'Sliding', 'partials/paginator', array('route' => 'search')); ?>
+
+                </div>
+
+                <div class="pull-right">
+                    <form class="form-query form-group" id="frmSearch2"
+                          action="<?php echo strtok($_SERVER["REQUEST_URI"], '?'); ?>">
+                        <select id="limit" name="limit" style="margin-left: 100px">
+                            <option value="10" <?php echo ($limit === 10) ? 'selected' : ''; ?>>10</option>
+                            <option value="20" <?php echo ($limit === 20) ? 'selected' : ''; ?>>20</option>
+                            <option value="30" <?php echo ($limit === 30) ? 'selected' : ''; ?>>30</option>
+                            <option value="50" <?php echo ($limit === 50) ? 'selected' : ''; ?>>50</option>
+                            <option value="100" <?php echo ($limit === 100) ? 'selected' : ''; ?>>100</option>
+                        </select>
+                        <input class="submit" type="submit"/>
+                    </form>
+
+                    <script>
+                        $("document").ready(function () {
+                            /* attach a submit handler to the form */
+                            $(".form-query").submit(function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                /* get some values from elements on the page: */
+//                            var val = $(this).serialize();
+//                            var url = $(this).attr('action');//;
+//                                alert(val+' ---');
+
+                                var query = $('#frmSearch').serialize();
+                                var limit = $('#frmSearch2').serialize();
+//                            alert(query + '&' + limit);
+                                dados = query + '&' + limit;
+//                                alert($(this).action);
+//                                dados = dados.replace(/=/g, "/");
+//                                dados = dados.replace(/&/g, "/");
+//                                url = $(this).attr('action');
+
+                                urlPattern = '<?php echo $urlPattern = strtok($_SERVER["REQUEST_URI"],'?');?>';
+                                //  urlPattern = '<?php //echo $urlPattern = strtok($_SERVER["REQUEST_URI"], '?');?>//';
+                                //echo $_SERVER   ["REQUEST_URI"]; ?>';
+                                <!--                                -->
+                                <?php //echo $this->url('catalogo/default',
+                                //                                array('controller' => 'categoria')); ?>
+//                            alert('ok');
+                                url = urlPattern + '?' + dados;
+//                                alert(url);
+                                $(location).attr('href', url);
+
+                                e.preventDefault();
+                            });
+                        });
+
+                    </script>
+                    <body>
+
+                    <div style="margin-left: 25px">
+                        <table>
+                            <tr>
+                                <th>Situaçao</th>
+                                <th>Quantidade</th>
+                            </tr>
+                            <tr>
+
+                                <td style="background-color: #B2FA94">ATIVAS</td>
+                                <td><?php echo  $cotadorAtivas?></td>
+<!--                                // erro no diff entao coloquei umas corri de bg-->
+                            </tr>
+                            <tr     >
+
+                                <td style="background-color: #E4ADAF">SUSPENSAS</td>
+<!--                                // erro no diff entao coloquei umas corri de bg-->
+                                <td><?php echo  $cotadorSuspensas ?></td>  
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" class="text-center" style="font-style: italic;font-style: oblique;font-size:large;"><?php echo "Total   ", $contadorTotal?></td>
+                            </tr>
+                            <!--                            <tr class="alt">-->
+<!---->
+<!--                                <td>40 horas</td>-->
+<!--                                <td>Domingos</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!---->
+<!--                                <td>60 horas</td>-->
+<!--                                <td>Segundas, Quartas e Sextas.</td>-->
+<!--                            </tr>-->
+<!--                            <tr class="alt">-->
+<!---->
+<!--                                <td>40 horas</td>-->
+<!--                                <td>Sábados</td>-->
+<!--                            </tr>-->
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<?php echo $this->headScript()
+    ->prependFile($this->basePath() . '/js/jquery.confirm.js');
+?>
+
+<div id="result"></div>
+<script>
+
+
+    //        $("document").ready(function () {
+    //            $(function () {
+    //                /* attach a submit handler to the form */
+    //                $(".panel-action-form").submit(function (event) {
+    //
+    //                /* stop form from submitting normally */
+    //                event.preventDefault();
+    //                event.stopPropagation();
+    //
+    //                /*clear result div*/
+    //                $("#result").html('');
+    //
+    //                /* get some values from elements on the page: */
+    //                var val = $(this).serialize();
+    //                //var url = $(this).action;
+    //                /* Send the data using post and put the results in a div */
+    //                $.ajax({
+    //                    url: url,
+    //                    type: "post",
+    //                    data: val,
+    //                    datatype: 'json',
+    //                    success: function (data) {
+    //                        $('#result').html(
+    //                            '<div class="panel-info-log col-lg-2" Style="position: fixed; top:50px; right: 0; z-index: 500;">' +
+    //                            '<div class="alert alert-block">' +
+    //                            '<a class="close" data-dismiss="alert" href="#">x</a>' +
+    //                            data.status + ':' + data.message +
+    //                            '</div>' +
+    //                            '</div>'
+    //                        );
+    //                        $("#result").addClass('msg_notice');
+    //                        $("#result").fadeIn(1500);
+    //                    },
+    //                    error: function () {
+    //                        $("#result").html('There was an error updating the settings');
+    //                        $("#result").addClass('msg_error');
+    //                        $("#result").fadeIn(1500);
+    //                    }
+    //                });
+    //            });
+    ////        })
+    //    });
+</script>

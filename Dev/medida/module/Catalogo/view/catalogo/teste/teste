@@ -1,0 +1,31 @@
+<div class="col-lg-12 clearfix">
+    <?php
+            $date = new \DateTime('now');
+            echo $date->format('d-m-Y - H:i:s');
+            ?>
+</div>
+<fieldset>
+<legend>Files list</legend>
+<div id="files" data-content-url="">
+    <!--        --><?php //echo $this->partial('list'); ?>
+</div>
+</fieldset>
+<fieldset>
+<legend>Upload new files</legend>
+<form name="uploadFiles" id="uploadFiles" method="post"
+      action="/catalogo/teste/upload" enctype="multipart/form-data">
+    <input type="file" name="files[]" multiple class="filestyle">
+    <button type="submit" class="btn btn-primary">Upload files</button>
+</form>
+</fieldset>
+
+
+
+
+<div class="clearfix"></div>
+        <?php
+                //$script = $this->inlineScript();
+                echo $this->inlineScript()
+                //    ->appendFile($this->basePath() . '/js/uploads/main.js')
+                //    ->appendFile($this->basePath() . '/js/bootstrap-filestyle.min.js');
+                ?>

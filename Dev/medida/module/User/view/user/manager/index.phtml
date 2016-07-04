@@ -1,0 +1,90 @@
+<div class="row-fluid">
+    <div class="panel panel-primary panel-crud-dark">
+        <div class="panel-heading">
+            <span class="panel-title pull-left">
+                <h4><b><?php echo $this->translate('Admin') ?> > <?php echo $this->translate('User') ?></b></h4>
+            </span>
+
+            <div class="row">
+                <div class="col-xs-7 col-md-4 col-lg-4 pull-right" style="padding-left:0;">
+
+                    <form class="no-padding" role="form">
+                        <div class="input-group">
+                            <input type="text" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info form-control" type="submit"><i
+                                        class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <!--                data-toggle="modal" href="#myModal" class="btn btn-primary"-->
+                <a data-toggle="modal"
+                   href="<?php echo $this->url('user/default', array('controller' => 'manager', 'action' => 'inserir')); ?>"
+                   class="btn btn-primary pull-right action"
+                   title="<?php echo $this->translate('Novo') ?>"
+                   style="margin-right: 5px;">
+                    <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo') ?>
+                </a>
+
+            </div>
+        </div>
+        <div class="panel-body no-padding" style="margin: 0;padding: 0;">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center col-md-4">Login</th>
+                        <th class="text-center col-md-5">Email</th>
+                        <th class="text-center col-md-2">Tipo</th>
+                        <th class="text-center col-md-1">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->data as $entity): ?>
+                        <?php $i++; ?>
+                        <tr class="text-center">
+                            <td><?php echo $entity->getLogin(); ?></td>
+                            <td><?php echo $entity->getEmail(); ?></td>
+                            <td><?php echo $entity->getRole()->getNome(); ?></td>
+                            <td>
+                                <a class="btn-sm btn-primary action"
+                                   href="<?php echo $this->url('cliente/default', array('controller' => 'manager', 'action' => 'detalhe',
+                                       'refid' => $entity->getId())); ?>"><i
+                                        class="glyphicon glyphicon-eye-open"></i></a>
+
+                                <a class="btn-sm btn-success action" href="<?php echo $this->url('user/default',
+                                    array('controller' => 'manager', 'action' => 'editar', 'refid' => $entity->getId())); ?>"><i
+                                        class="glyphicon glyphicon-edit text-success"></i></a>
+<!--                                <a class="btn-sm btn-success action"-->
+<!--                                   href="--><?php //echo $this->url('user/default',
+//                                       array('controller' => 'manager', 'action' => 'editar', 'refid' => $entity->getId())); ?><!--"><i-->
+<!--                                        class="glyphicon glyphicon-edit"></i></a>-->
+
+                                <a class="btn-sm btn-danger" href="<?php echo $this->url('user/default',
+                                    array('controller' => 'manager', 'action' => 'remover', 'refid' => $entity->getId())); ?>"><i
+                                        class="glyphicon glyphicon-trash text-danger"></i></a>
+
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php for (; $i < 10; $i++) { ?>
+                        <tr class="text-center">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <?php }; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <?php echo $this->paginationControl($this->data, 'Sliding', 'partials/paginator'); ?>
+        </div>
+
+    </div>
+</div>

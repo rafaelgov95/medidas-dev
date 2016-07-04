@@ -1,0 +1,166 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: walmirlsj
+ * Date: 05/07/15
+ * Time: 22:42
+ */
+
+if (count($this->messages["Danger"]) or count($this->messages["Warning"]) or count($this->messages["Success"]) or count($this->messages["Messages"])) {
+    ?>
+    <?php foreach ($this->messages as $alert => $type) { ?>
+        <?php foreach ($type as $pox => $msg) { ?>
+            <div class="alert alert-block <?php echo strtolower('alert-' . $alert) ?>">
+                <a class="close" data-dismiss="alert" href="#">x</a>
+
+                <p><?php echo $this->translate($msg) ?></p>
+            </div>
+        <?php } ?>
+    <?php } ?>
+
+<?php }//else: ?>
+
+    <div class="row-fluid">
+        <div class="panel panel-primary panel-crud-dark">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
+                    <!--            <span class="panel-title">-->
+                    <b><?php echo $this->translate('Marcas') ?></b>
+                    <!--                >-->
+                    <!--                --><?php //echo $this->translate('Resultados de Testes') ?>
+                    <!--        </span>-->
+                </h4>
+
+                <div class="row">
+                    <div class="col-xs-6 col-md-4 col-lg-4 pull-right" style="padding-left:0;">
+
+                        <form id='frmSearch' class="no-padding" role="form" method="get"
+                              action="<?php echo $this->url('catalogo/default',
+                                  array('controller' => 'marca', 'action' => 'index')); ?>">
+
+                            <div class="col-md-4 no-padding-right">
+                                <select id="type" name="type" required="true" class='form-control col-md-2'>
+                                    <!--                                <option value="1" -->
+                                    <?php //echo ($frm_search['type']==1)?'selected':'';?><!-->Data</option>-->
+                                    <!--                                <option value="2" -->
+                                    <?php //echo ($frm_search['type']==2)?'selected':'';?><!-->Profissional</option>-->
+                                    <!--                                <option value="3" -->
+                                    <?php //echo ($frm_search['type']==3)?'selected':'';?><!-->Teste</option>-->
+                                    <!--                                <option value="4" -->
+                                    <?php //echo ($frm_search['type']==4)?'selected':'';?><!-->Duração</option>-->
+                                    <!--                                <option value="5" -->
+                                    <?php //echo ($frm_search['type']==5)?'selected':'';?><!-->Valor</option>-->
+                                </select>
+                            </div>
+                            <div class="input-group col-md-8">
+                                <input id="search" name="search" required="true" type="date"
+                                       class="form-control" <?php //echo ($frm_search['search']!=null)?'value="'.$frm_search['search'].'"':'';?>>
+                                <span class="input-group-btn">
+                                    <button id="btnSearch" class="btn btn-info form-control" type="submit"><i
+                                            class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!--                data-toggle="modal" href="#myModal" class="btn btn-primary"-->
+                    <a data-toggle="modal" href="<?php echo $this->url('catalogo/default',
+                        array('controller' => 'marca', 'action' => 'inserir')); //#ModalNew ?>"
+                       class="btn btn-primary pull-right action"
+                       title="<?php echo $this->translate('Novo') ?>"
+                       style="margin-right: 5px;">
+                        <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo') ?>
+                    </a>
+
+                    <!--                <a class="btn btn-primary pull-right" title="-->
+                    <?php //echo $this->translate('Novo') ?><!--"-->
+                    <!--                   style="margin-right: 5px;"-->
+                    <!--                   href="-->
+                    <?php //echo $this->url('atleta/default', array('controller' => 'result', 'action' => 'new')); ?><!--">-->
+                    <!--                    <i class="glyphicon glyphicon-plus-sign"></i> --><?php //echo $this->translate('Novo') ?>
+                    <!--                </a>-->
+                </div>
+            </div>
+
+            <div class="panel-body no-padding" style="margin: 0;padding: 0;">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <!--                    <th class="text-center">#</th>-->
+                            <th class="text-center col-md-3">Descricão</th>
+                            <th class="text-center col-md-1">Criado em</th>
+                            <th class="text-center col-md-1">Ultima atualização</th>
+                            <th class="text-center col-md-1">Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i = 0; ?>
+                        <?php foreach ($this->data as $entity): ?>
+                            <?php $i++; ?>
+                            <tr class="text-center">
+
+                                <td>
+                                    <?php echo $entity->getDescricao(); ?>
+                                </td>
+
+                                <td>
+                                    <?php echo ($entity->getCreatedAt()) ? $entity->getCreatedAt()->format('d/m/Y') : "--/--/--"; ?>
+                                </td>
+
+                                <td>
+                                    <?php echo ($entity->getUpdatedAt()) ? $entity->getUpdatedAt()->format('d/m/Y') : "--/--/--"; ?>
+                                </td>
+
+                                <td>
+                                    <a class="btn-sm btn-success action"
+                                       href="<?php echo $this->url('catalogo/default',
+                                           array('controller' => 'marca', 'action' => 'editar', 'refid' => $entity->getId())); ?>"><i
+                                            class="glyphicon glyphicon-edit"></i></a>
+                                    <a class="btn-sm btn-danger" data-toggle="confirm"
+                                       href="<?php echo $this->url('catalogo/default',
+                                           array('controller' => 'marca', 'action' => 'remover', 'refid' => $entity->getId())); ?>"><i
+                                            class="glyphicon glyphicon-trash"></i> </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php for (; $i < 10; $i++) { ?>
+                            <tr class="text-center">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        <?php }; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <script>
+                $("[data-toggle=confirm]").click(function () {
+                    $(this).click.url = $(this).attr('href');
+                }).confirm({
+                    text: "Deseja realmente deletar?",
+                    title: "Confirmar",
+                    confirm: function (button) {
+                        $(location).attr('href', $(this).click.url);
+//                    $(this).trigger('click');
+                    },
+                    cancel: function (button) {
+                        e.preventDefault();
+                    },
+                    confirmButton: "Sim",
+                    cancelButton: "Não"
+                });
+            </script>
+
+            <div class="panel-footer">
+                            <?php echo $this->paginationControl($this->data, 'Sliding', 'partials/paginator'); ?>
+            </div>
+
+        </div>
+    </div>
+<?php echo $this->headScript()
+    ->prependFile($this->basePath() . '/js/jquery.confirm.js');
+?>

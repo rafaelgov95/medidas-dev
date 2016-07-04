@@ -1,0 +1,249 @@
+<?php
+/*
+ * Navigation container (config/array)
+
+ * Each element in the array will be passed to
+ * Zend\Navigation\Page\AbstractPage::factory() when constructing
+ * the navigation container below.
+ */
+//$pages = array(
+//    array(
+//        'label'      => 'Home',
+//        'title'      => 'Go Home',
+//        'module'     => 'Application',
+//        'controller' => 'Index',
+//        'action'     => 'index',
+//        'order'      => -100 // make sure home is the first page
+//    ),
+//
+//);
+//$pages=[
+//    'navigation' => [
+//        'default' => [
+//            [
+//                'label' => 'home',
+//                'route' => 'home',
+//                'pages' => [
+//                    [
+//                        'label' => 'home',
+//                        'route' => 'home',
+//                        'action' => 'index',
+//                    ],
+//                ]
+//            ],
+//        ]
+//    ],
+//];
+
+// Create container from array
+//$container = new Zend\Navigation\Navigation($pages);
+
+// Store the container in the proxy helper:
+//$this->plugin('navigation')->setContainer($container);
+$acl = $this->get("Acl\Permissions\Acl");
+$partial = array('partials/navigation', 'menu');
+//->setPartial($partial)
+echo $this->navigation('Navigation')->setAcl($acl)->setRole('Admin')->menu();
+
+//echo $this->navigation('Navigation')->menu()->render();
+//$this->navigation($container);
+//$this->navigation($container)->setAcl($acl)->setRole('Admin');
+//echo '<div class="breadcrumb">';
+//echo $this->navigation($container)->breadcrumbs()->render();
+//echo '</div>';
+?>
+
+<?php
+/*
+$acl = array(
+    'Visitante' =>
+        array(
+            'Application::Index' =>
+                array(
+                    0 => 'Index',
+                ),
+            'Catalogo::Index' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Detalhe',
+                ),
+            'Catalogo::Veiculo' =>
+                array(
+                    0 => 'Detalhe',
+                ),
+            'User::Index' =>
+                array(
+                    0 => 'Activate',
+                    1 => 'Register',
+                    2 => 'Recover',
+                ),
+            'User::Auth' =>
+                array(
+                    0 => 'Index',
+                ),
+        ),
+    'Admin' =>
+        array(
+            'Acl::Index' =>
+                array(
+                    0 => 'Index',
+                ),
+            'Acl::Privilege' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+            'Acl::Resource' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+            'Acl::Role' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+            'Catalogo::Veiculo' =>
+                array(
+                    0 => 'Remover',
+                ),
+            'User::Manager' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+        ),
+    'Funcionario' =>
+        array(
+            'Catalogo::Categoria' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+            'Catalogo::Marca' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+            'Catalogo::Teste' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                    3 => 'Remover',
+                ),
+            'Cliente::Manager' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Remover',
+                ),
+        ),
+    'User' =>
+        array(
+            'Catalogo::Veiculo' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                    2 => 'Editar',
+                ),
+            'Cliente::Index' =>
+                array(
+                    0 => 'Index',
+                    1 => 'Inserir',
+                ),
+            'Cliente::Manager' =>
+                array(
+                    0 => 'Editar',
+                ),
+            'User::Auth' =>
+                array(
+                    0 => 'Logout',
+                ),
+        ),
+);
+
+?>
+    <ul>
+        <!--        <li class=""><a href="--><?php //echo $this->url('home') ?><!--">-->
+        <?php //echo $this->translate('Index') ?><!--</a></li>-->
+        <?php foreach ($acl['Visitante'] as $resource ) { ?>
+            <?php foreach ($resource as $privileges => $privilege) { ?>
+<!--                --><?php //foreach ($privileges as $privilege) { ?>
+                    <?php
+                    $teste = array_keys($resource);
+//                    var_dump($privileges);
+                echo $teste;
+                    $module = explode('::', $resource);
+                    $controller = $module[1];
+                    $module = $module[0];
+                    $module = strtolower($module);
+                    $controller = strtolower($controller);
+                    ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="true"><?php echo $module; ?> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+<!--                            <li><a href="--><?php
+//                                echo $this->url($module . '/default',
+//                                    array(
+//                                        'controller' => strtolower($controller),
+//                                        'action' => strtolower($privilege),
+//                                    )
+//                                );
+//                                ?><!--">--><?php //echo $privilege; ?><!--</a></li>-->
+                        </ul>
+                    </li>
+                <?php //}
+            } ?>
+        <?php } ?>
+    </ul>
+
+
+
+
+
+
+
+
+
+
+<?php
+/*
+////$script = $this->inlineScript();
+//echo $this->inlineScript()
+//    ->prependFile($this->basePath('js/main.js'));
+////    ->appendFile($this->basePath() . '/js/main.js');
+////    ->appendFile($this->basePath() . '/js/bootstrap-filestyle.min.js');
+//?>
+<!--<div class="col-lg-12 clearfix">-->
+<!--    --><?php
+//    $date = new \DateTime('now');
+//    echo $date->format('d-m-Y - H:i:s');
+//    ?>
+<!--</div>-->
+<!--<fieldset>-->
+<!--    <legend>Files list</legend>-->
+<!--    <div id="files" data-content-url="">-->
+<!--        <!--        -->--><?php ////echo $this->partial('list'); ?>
+<!--    </div>-->
+<!--</fieldset>-->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!--<div class="clearfix"></div>-->
+*/
