@@ -1,0 +1,13 @@
+<div class="col s12 m6">
+    <div class="card-panel red accent-2">
+        <label for="card-panel" class="flow-text bold thin">Adicionar Reu</label>
+        <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <input type="text" id="autocomplete-input" class="autocomplete">
+            <label for="autocomplete-input">Nome da Vitima</label>
+        </div>
+        <div class="collection" *ngFor="let user of Users">
+            <a href="#!" class="collection-item"><span class="badge">1</span>{{user.name}}</a>
+        </div>
+    </div>
+</div>
