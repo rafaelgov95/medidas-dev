@@ -12,12 +12,15 @@ import { AppComponent } from './app.component';
 import{NavBarComponent} from './nav-bar/nav-bar.component';
 import{FooterComponent} from './footer/footer.component';
 import { PanelPrimaryComponent } from './panel-primary/panel-primary.component';
+import { ListMedidasComponent } from './list-medidas/list-medidas.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     PanelPrimaryComponent,
-    FooterComponent
+    FooterComponent,
+    ListMedidasComponent
  
   ],
   imports: [

@@ -1,0 +1,7 @@
+.container {
+    margin: auto;
+    margin-top: 10px;
+    /*width: 50%;*/
+    border: 3px solid black;
+    padding: 10px;
+}
